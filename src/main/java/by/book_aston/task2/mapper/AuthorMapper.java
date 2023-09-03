@@ -2,9 +2,15 @@ package by.book_aston.task2.mapper;
 
 import by.book_aston.task2.model.dto.AuthorDto;
 import by.book_aston.task2.model.entity.Author;
+import by.book_aston.task2.model.entity.Book;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AuthorMapper {
     public static Author toAuthorFromResultSet(ResultSet resultSet) throws SQLException {
@@ -12,6 +18,23 @@ public class AuthorMapper {
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
                 resultSet.getString("surname"));
+    }
+
+    public static List<Author> parseAuthorListWithBooks(ResultSet resultSet) throws SQLException {
+        Map<Long,Author> authorMap = new HashMap<>();
+        while (resultSet.next()){
+            long id = resultSet.getLong("id");
+            Author author;
+            if(!authorMap.containsKey(id)){
+                author = toAuthorFromResultSet(resultSet);
+                author.setBookList(new ArrayList<>());
+            }else{
+                author = authorMap.get(id);
+            }
+            author.getBookList().add(parseBook(resultSet));
+            authorMap.put(id,author);
+        }
+        return new ArrayList<>(authorMap.values());
     }
 
     public static Author toAuthorFromDto(AuthorDto authorDto){
@@ -26,8 +49,16 @@ public class AuthorMapper {
         return new AuthorDto(
                 author.getId(),
                 author.getName(),
-                author.getSurname()
+                author.getSurname(),
+                author.getBookList()
         );
+    }
+
+    public static Book parseBook(ResultSet resultSet) throws SQLException {
+        return new Book(
+                resultSet.getLong("book_id"),
+                resultSet.getString("book_name"),
+                LocalDate.parse(resultSet.getString("book_publication_date")));
     }
 
 }

@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -26,7 +28,7 @@ class AuthorServiceTest {
 
     @Test
     void add() {
-        AuthorDto authorDto = new AuthorDto(1,"Alex","Alex");
+        AuthorDto authorDto = new AuthorDto(1,"Alex","Alex",new ArrayList<>());
         Mockito.when(authorDao.add(any())).thenReturn(100L);
         long add = authorService.add(authorDto);
         Assert.assertEquals(100,add);

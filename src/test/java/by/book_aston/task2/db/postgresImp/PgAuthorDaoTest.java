@@ -2,6 +2,7 @@ package by.book_aston.task2.db.postgresImp;
 
 import by.book_aston.task2.db.AuthorDao;
 import by.book_aston.task2.model.entity.Author;
+import by.book_aston.task2.model.entity.Book;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,11 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
 class PgAuthorDaoTest {
@@ -38,15 +44,15 @@ class PgAuthorDaoTest {
 
     @Test
     void get() {
-        Author author = authorDao.get(2);
-        Assert.assertEquals(2,author.getId());
+        Author author = authorDao.get(4);
+        Assert.assertEquals(4,author.getId());
     }
 
     @Test
     void add() {
-        Author author = new Author(100, "Alex", "Alex");
+        Author author = new Author(0, "Alex", "Alex",new ArrayList<>());
         long id = authorDao.add(author);
-        Assert.assertEquals(6,id);
+        Assert.assertEquals(7,id);
     }
 
     @Test
@@ -72,5 +78,12 @@ class PgAuthorDaoTest {
     @Test
     void containsId() {
         Assert.assertTrue(authorDao.containsId(3));
+    }
+
+    @Test
+    void editBooks() {
+        Book book = new Book(3,"New Book", LocalDate.now());
+        authorDao.editBooks(5, Arrays.asList(book));
+        assertEquals(3,authorDao.get(5).getBookList().get(0).getId());
     }
 }
