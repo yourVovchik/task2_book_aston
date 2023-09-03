@@ -1,4 +1,4 @@
-package by.book_aston.task2.db.postgres;
+package by.book_aston.task2.db.postgresImp;
 
 import by.book_aston.task2.db.BookDao;
 import by.book_aston.task2.mapper.BookMapper;

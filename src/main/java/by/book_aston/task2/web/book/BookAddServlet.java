@@ -1,12 +1,10 @@
 package by.book_aston.task2.web.book;
 
 import by.book_aston.task2.config.ConnectionDB;
-import by.book_aston.task2.db.postgres.PgBookDao;
-import by.book_aston.task2.model.dto.AuthorDto;
+import by.book_aston.task2.db.postgresImp.PgBookDao;
 import by.book_aston.task2.model.dto.BookDto;
 import by.book_aston.task2.service.BookService;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,8 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.time.LocalDate;
 
 @WebServlet(name = "BookAdd", urlPatterns = "/book/add")
 public class BookAddServlet  extends HttpServlet {

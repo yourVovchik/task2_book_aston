@@ -1,8 +1,7 @@
 package by.book_aston.task2.web.book;
 
 import by.book_aston.task2.config.ConnectionDB;
-import by.book_aston.task2.db.BookDao;
-import by.book_aston.task2.db.postgres.PgBookDao;
+import by.book_aston.task2.db.postgresImp.PgBookDao;
 import by.book_aston.task2.service.BookService;
 import by.book_aston.task2.web.LocalDateAdapter;
 import com.google.gson.GsonBuilder;

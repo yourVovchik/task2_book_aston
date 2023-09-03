@@ -1,8 +1,7 @@
 package by.book_aston.task2.web.author;
 
 import by.book_aston.task2.config.ConnectionDB;
-import by.book_aston.task2.db.AuthorDao;
-import by.book_aston.task2.db.postgres.PgAuthorDao;
+import by.book_aston.task2.db.postgresImp.PgAuthorDao;
 import by.book_aston.task2.model.dto.AuthorDto;
 import by.book_aston.task2.service.AuthorService;
 import com.google.gson.Gson;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 
 @WebServlet(name = "AuthorAdd", urlPatterns = "/author/add")
 public class AuthorAddServlet extends HttpServlet {

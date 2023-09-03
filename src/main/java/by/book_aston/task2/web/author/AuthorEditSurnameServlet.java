@@ -1,7 +1,7 @@
 package by.book_aston.task2.web.author;
 
 import by.book_aston.task2.config.ConnectionDB;
-import by.book_aston.task2.db.postgres.PgAuthorDao;
+import by.book_aston.task2.db.postgresImp.PgAuthorDao;
 import by.book_aston.task2.service.AuthorService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
