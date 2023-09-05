@@ -1,21 +1,15 @@
-package by.book_aston.task2.model.dto;
+package by.book_aston.task2.model.dto.book;
 
-import by.book_aston.task2.model.entity.Book;
-
-import java.util.List;
-
-public class AuthorDto {
+public class AuthorBooksDto {
     private long id;
     private String name;
     private String surname;
 
-    private List<Book> bookList;
 
-    public AuthorDto(long id, String name, String surname, List<Book> bookList) {
+    public AuthorBooksDto(long id, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.bookList = bookList;
     }
 
     public long getId() {

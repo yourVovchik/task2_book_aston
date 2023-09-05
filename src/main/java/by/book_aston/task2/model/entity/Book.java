@@ -6,7 +6,6 @@ import java.util.List;
 public class Book {
     private long id;
     private String name;
-
     private LocalDate publicationDate;
     private List<Author> authors;
 

@@ -1,8 +1,9 @@
-package by.book_aston.task2.db.postgresImp;
+package by.book_aston.task2.db.Imp;
 
 import by.book_aston.task2.db.AuthorDao;
 import by.book_aston.task2.model.entity.Author;
 import by.book_aston.task2.model.entity.Book;
+import by.book_aston.task2.model.entity.Publisher;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,13 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
-class PgAuthorDaoTest {
+class AuthorDaoImpTest {
 
     @Container
     private static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14.7")
             .withInitScript("author_init.sql");
 
-    private AuthorDao authorDao;
+    private AuthorDaoImp authorDao;
 
     @BeforeEach
     void runContainer(){
@@ -36,21 +37,21 @@ class PgAuthorDaoTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        authorDao = new PgAuthorDao(connection);
+        authorDao = new AuthorDaoImp(connection);
         container.start();
     }
-
-
 
     @Test
     void get() {
         Author author = authorDao.get(4);
         Assert.assertEquals(4,author.getId());
+        Assert.assertEquals("Maksim4",author.getName());
+        Assert.assertEquals("Tankov4",author.getSurname());
     }
 
     @Test
     void add() {
-        Author author = new Author(0, "Alex", "Alex",new ArrayList<>());
+        Author author = new Author(0, "Alex", "AlexSurname",new Publisher(1,"TEST",new ArrayList<>()),new ArrayList<>());
         long id = authorDao.add(author);
         Assert.assertEquals(7,id);
     }

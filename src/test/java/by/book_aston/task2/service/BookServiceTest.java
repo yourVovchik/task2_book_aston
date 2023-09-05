@@ -1,12 +1,9 @@
 package by.book_aston.task2.service;
 
-import by.book_aston.task2.db.AuthorDao;
 import by.book_aston.task2.db.BookDao;
-import by.book_aston.task2.model.dto.AuthorDto;
-import by.book_aston.task2.model.dto.BookDto;
+import by.book_aston.task2.model.dto.book.BookDto;
 import by.book_aston.task2.model.entity.Author;
 import by.book_aston.task2.model.entity.Book;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

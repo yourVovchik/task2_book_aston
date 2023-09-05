@@ -1,7 +1,7 @@
 package by.book_aston.task2.service;
 
 import by.book_aston.task2.db.AuthorDao;
-import by.book_aston.task2.model.dto.AuthorDto;
+import by.book_aston.task2.model.dto.author.AuthorDto;
 import by.book_aston.task2.model.entity.Author;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;

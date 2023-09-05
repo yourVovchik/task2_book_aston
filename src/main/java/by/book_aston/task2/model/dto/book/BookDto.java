@@ -1,6 +1,4 @@
-package by.book_aston.task2.model.dto;
-
-import by.book_aston.task2.model.entity.Author;
+package by.book_aston.task2.model.dto.book;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,13 +8,13 @@ public class BookDto {
     private String name;
 
     private LocalDate publicationDate;
-    private List<Author> authors;
+    private List<AuthorBooksDto> authorBooksDtoList;
 
-    public BookDto(long id, String name, LocalDate publicationDate, List<Author> authors) {
+    public BookDto(long id, String name, LocalDate publicationDate, List<AuthorBooksDto> authorBooksDtoList) {
         this.id = id;
         this.name = name;
         this.publicationDate = publicationDate;
-        this.authors = authors;
+        this.authorBooksDtoList = authorBooksDtoList;
     }
 
     public long getId() {
@@ -43,11 +41,11 @@ public class BookDto {
         this.publicationDate = publicationDate;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
+    public List<AuthorBooksDto> getAuthors() {
+        return authorBooksDtoList;
     }
 
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+    public void setAuthors(List<AuthorBooksDto> authors) {
+        this.authorBooksDtoList = authors;
     }
 }

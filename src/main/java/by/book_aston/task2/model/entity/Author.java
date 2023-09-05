@@ -6,12 +6,14 @@ public class Author {
     private long id;
     private String name;
     private String surname;
-
+    private Publisher publisher;
     private List<Book> bookList;
-    public Author(long id, String name, String surname, List<Book> bookList) {
+
+    public Author(long id, String name, String surname,Publisher publisher, List<Book> bookList) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.publisher = publisher;
         this.bookList = bookList;
     }
 
@@ -51,5 +53,13 @@ public class Author {
 
     public void setBookList(List<Book> bookList) {
         this.bookList = bookList;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 }

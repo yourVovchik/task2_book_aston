@@ -1,4 +1,4 @@
-package by.book_aston.task2.db.postgresImp;
+package by.book_aston.task2.db.Imp;
 
 import by.book_aston.task2.db.BookDao;
 import by.book_aston.task2.mapper.BookMapper;
@@ -13,10 +13,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
-public class PgBookDao implements BookDao {
+public class BookDaoImp implements BookDao {
     private final Connection connection;
 
-    public PgBookDao(Connection connection) {
+    public BookDaoImp(Connection connection) {
         this.connection = connection;
     }
     @Override
@@ -27,7 +27,7 @@ public class PgBookDao implements BookDao {
                             "FROM book b LEFT JOIN author_book atb ON b.id = atb.book_id LEFT JOIN author a ON atb.author_id = a.id WHERE b.id = ?;");
             ps.setLong(1,id);
             ResultSet resultSet = ps.executeQuery();
-            return BookMapper.parseBookListWithAuthors(resultSet).get(0);
+            return BookMapper.toBookListFromResultSet(resultSet).get(0);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

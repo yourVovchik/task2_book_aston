@@ -2,7 +2,7 @@ package by.book_aston.task2.service;
 
 import by.book_aston.task2.db.AuthorDao;
 import by.book_aston.task2.mapper.AuthorMapper;
-import by.book_aston.task2.model.dto.AuthorDto;
+import by.book_aston.task2.model.dto.author.AuthorDto;
 
 public class AuthorService {
     private final AuthorDao authorDao;
@@ -17,7 +17,7 @@ public class AuthorService {
 
     public AuthorDto get(long id){
         if(authorDao.containsId(id)){
-            return AuthorMapper.fromAuthorToDto(authorDao.get(id));
+            return AuthorMapper.toAuthorDtoFromAuthor(authorDao.get(id));
         }
         throw new NullPointerException(id + " not found");
     }

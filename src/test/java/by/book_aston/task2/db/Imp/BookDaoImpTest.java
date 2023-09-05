@@ -1,4 +1,4 @@
-package by.book_aston.task2.db.postgresImp;
+package by.book_aston.task2.db.Imp;
 
 import by.book_aston.task2.db.BookDao;
 import by.book_aston.task2.model.entity.Author;
@@ -17,15 +17,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Testcontainers
-class PgBookDaoTest {
-
+class BookDaoImpTest {
     @Container
     private static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14.7")
-            .withInitScript("book_init.sql");
+            .withInitScript("author_init.sql");
 
     private BookDao bookDao;
 
@@ -37,7 +35,7 @@ class PgBookDaoTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        bookDao = new PgBookDao(connection);
+        bookDao = new BookDaoImp(connection);
         container.start();
     }
 
@@ -78,4 +76,13 @@ class PgBookDaoTest {
     void containsId() {
         Assert.assertTrue(bookDao.containsId(3));
     }
+
+
+    @Test
+    void editPublicationDate() {
+        LocalDate localDate = LocalDate.now();
+        bookDao.editPublicationDate(3,localDate);
+        Assert.assertEquals(localDate,bookDao.get(3).getPublicationDate());
+    }
+
 }

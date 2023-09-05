@@ -1,9 +1,19 @@
+CREATE TABLE publisher
+(
+    id SERIAL NOT NULL ,
+    name character varying(50)
+);
+
 CREATE TABLE author
 (
     id SERIAL NOT NULL ,
     name character varying(50),
     surname character varying(50),
-    CONSTRAINT author_pkey PRIMARY KEY (id)
+    publisher_id bigint,
+    CONSTRAINT author_pkey PRIMARY KEY (id),
+    CONSTRAINT author_publisher_id_fkey FOREIGN KEY (publisher_id)
+        REFERENCES public.publisher (id)
+
 );
 
 CREATE TABLE book
@@ -26,6 +36,13 @@ CREATE TABLE author_book
     CONSTRAINT author_book_book_id_fkey FOREIGN KEY (book_id)
         REFERENCES public.book (id)
 );
+
+INSERT INTO publisher(id,name)
+VALUES (DEFAULT,'THE NEW YORK TIMES');
+INSERT INTO publisher(id,name)
+VALUES (DEFAULT,'THE WASHINGTON POST');
+INSERT INTO publisher(id,name)
+VALUES (DEFAULT,'THE GUARDIAN');
 
 INSERT INTO author (id, name, surname)
 VALUES (1, 'Maksim1', 'Tankov1');

@@ -2,7 +2,7 @@ package by.book_aston.task2.service;
 
 import by.book_aston.task2.db.BookDao;
 import by.book_aston.task2.mapper.BookMapper;
-import by.book_aston.task2.model.dto.BookDto;
+import by.book_aston.task2.model.dto.book.BookDto;
 import by.book_aston.task2.model.entity.Author;
 
 import java.util.List;
@@ -17,16 +17,21 @@ public class BookService {
 
     public BookDto get(long id){
         if(bookDao.containsId(id)){
-            return BookMapper.fromBooktoBookDto(bookDao.get(id));
+            return BookMapper.toBookDtoFromBook(bookDao.get(id));
         }
         throw new NullPointerException(id + " not found");
     };
 
     public long add(BookDto bookDto){
-        return bookDao.add(BookMapper.toBookFromDto(bookDto));
+        return bookDao.add(BookMapper.toBookFromBookDto(bookDto));
     };
     public void delete(long id){
-        bookDao.delete(id);
+        if(bookDao.containsId(id)){
+            bookDao.delete(id);
+        }else{
+            throw new NullPointerException(id + " not found");
+        }
+
     };
     public void editName(long id, String name){
         if(bookDao.containsId(id)){
