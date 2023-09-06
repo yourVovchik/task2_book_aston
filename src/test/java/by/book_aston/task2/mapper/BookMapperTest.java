@@ -7,11 +7,15 @@ import by.book_aston.task2.model.entity.Book;
 import by.book_aston.task2.model.entity.Publisher;
 import org.junit.jupiter.api.Test;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class BookMapperTest {
 
@@ -45,5 +49,17 @@ class BookMapperTest {
         assertEquals(id,authorBooksDto.getId());
         assertEquals(name,authorBooksDto.getName());
         assertEquals(name,authorBooksDto.getSurname());
+    }
+
+    @Test
+    void toBookFromResultSet() throws SQLException {
+        ResultSet resultSet = mock(ResultSet.class);
+        when(resultSet.getLong("id")).thenReturn(id);
+        when(resultSet.getString("name")).thenReturn(name);
+        when(resultSet.getString("publication_date")).thenReturn(String.valueOf(localDate));
+        Book bookFromResultSet = BookMapper.toBookFromResultSet(resultSet);
+        assertEquals(id,bookFromResultSet.getId());
+        assertEquals(name,bookFromResultSet.getName());
+        assertEquals(localDate,bookFromResultSet.getPublicationDate());
     }
 }

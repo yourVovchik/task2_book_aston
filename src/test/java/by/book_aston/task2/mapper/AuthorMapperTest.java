@@ -6,11 +6,15 @@ import by.book_aston.task2.model.entity.Author;
 import by.book_aston.task2.model.entity.Book;
 import org.junit.jupiter.api.Test;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class AuthorMapperTest {
 
@@ -61,4 +65,30 @@ class AuthorMapperTest {
         assertEquals(localDate,bookAuthorsDto.getPublicationDate());
     }
 
+    @Test
+    void toAuthorFromResultSet() throws SQLException {
+        ResultSet resultSet = mock(ResultSet.class);
+        when(resultSet.getLong("id")).thenReturn(id);
+        when(resultSet.getString("name")).thenReturn(name);
+        when(resultSet.getString("surname")).thenReturn(surname);
+        Author authorFromResultSet = AuthorMapper.toAuthorFromResultSet(resultSet);
+        assertEquals(id,authorFromResultSet.getId());
+        assertEquals(name,authorFromResultSet.getName());
+        assertEquals(surname,authorFromResultSet.getSurname());
+
+    }
+
+
+    @Test
+    void toBookFromResultSet() throws SQLException {
+        ResultSet resultSet = mock(ResultSet.class);
+        when(resultSet.getLong("book_id")).thenReturn(id);
+        when(resultSet.getString("book_name")).thenReturn(name);
+        LocalDate localDate = LocalDate.now();
+        when(resultSet.getString("book_publication_date")).thenReturn(String.valueOf(localDate));
+        Book bookFromResultSet = AuthorMapper.toBookFromResultSet(resultSet);
+        assertEquals(id,bookFromResultSet.getId());
+        assertEquals(name,bookFromResultSet.getName());
+        assertEquals(localDate,bookFromResultSet.getPublicationDate());
+    }
 }

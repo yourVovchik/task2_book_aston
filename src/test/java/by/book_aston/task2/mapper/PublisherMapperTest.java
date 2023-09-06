@@ -6,10 +6,14 @@ import by.book_aston.task2.model.entity.Author;
 import by.book_aston.task2.model.entity.Publisher;
 import org.junit.jupiter.api.Test;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PublisherMapperTest {
 
@@ -54,4 +58,25 @@ class PublisherMapperTest {
     }
 
 
+    @Test
+    void toPublisherFromResultSet() throws SQLException {
+        ResultSet resultSet = mock(ResultSet.class);
+        when(resultSet.getLong("id")).thenReturn(id);
+        when(resultSet.getString("name")).thenReturn(name);
+        Publisher publisherFromResultSet = PublisherMapper.toPublisherFromResultSet(resultSet);
+        assertEquals(id,publisherFromResultSet.getId());
+        assertEquals(name,publisherFromResultSet.getName());
+    }
+
+    @Test
+    void toAuthorFromResultSet() throws SQLException {
+        ResultSet resultSet = mock(ResultSet.class);
+        when(resultSet.getLong("author_id")).thenReturn(id);
+        when(resultSet.getString("author_name")).thenReturn(name);
+        when(resultSet.getString("author_surname")).thenReturn(name);
+        Author authorFromResultSet = PublisherMapper.toAuthorFromResultSet(resultSet);
+        assertEquals(id,authorFromResultSet.getId());
+        assertEquals(name,authorFromResultSet.getName());
+        assertEquals(name,authorFromResultSet.getSurname());
+    }
 }

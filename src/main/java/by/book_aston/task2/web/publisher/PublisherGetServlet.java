@@ -27,7 +27,6 @@ public class PublisherGetServlet  extends HttpServlet {
         resp.setContentType("application/json");
         writer.print(new GsonBuilder()
                 .setPrettyPrinting()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .create().toJson(publisherService.get(Integer.valueOf(req.getParameter("id")))));
         writer.flush();
     }
