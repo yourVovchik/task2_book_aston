@@ -1,5 +1,6 @@
 package by.book_aston.task2.db.Imp;
 
+import by.book_aston.task2.config.ConnectionDB;
 import by.book_aston.task2.db.PublisherDao;
 import by.book_aston.task2.mapper.PublisherMapper;
 import by.book_aston.task2.model.entity.Author;
@@ -13,15 +14,10 @@ import java.util.List;
 
 public class PublisherDaoImp implements PublisherDao {
 
-    private final Connection connection;
-
-    public PublisherDaoImp(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Publisher get(long id) {
-        try {
+        try(Connection connection = ConnectionDB.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT p.id, p.name, a.id AS author_id, a.name AS author_name, a.surname AS author_surname FROM publisher p LEFT JOIN author a ON p.id = a.publisher_id WHERE p.id = ?");
             ps.setLong(1,id);
             ResultSet resultSet = ps.executeQuery();
@@ -33,7 +29,7 @@ public class PublisherDaoImp implements PublisherDao {
 
     @Override
     public long add(Publisher publisher) {
-        try {
+        try(Connection connection = ConnectionDB.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO publisher (name) VALUES (?) RETURNING id;");
             ps.setString(1, publisher.getName());
             ResultSet resultSet = ps.executeQuery();
@@ -46,7 +42,7 @@ public class PublisherDaoImp implements PublisherDao {
 
     @Override
     public void delete(long id) {
-        try {
+        try(Connection connection = ConnectionDB.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM publisher WHERE id = ?;");
             ps.setLong(1,id);
             ps.execute();
@@ -58,7 +54,7 @@ public class PublisherDaoImp implements PublisherDao {
 
     @Override
     public void editName(long id, String name) {
-        try {
+        try(Connection connection = ConnectionDB.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("UPDATE publisher SET name = ? WHERE id = ?;");
             ps.setString(1,name);
             ps.setLong(2,id);
@@ -70,7 +66,7 @@ public class PublisherDaoImp implements PublisherDao {
 
     @Override
     public void editAuthors(long id, List<Author> authorList) {
-        try {
+        try(Connection connection = ConnectionDB.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM author WHERE publisher_id = ?;");
             ps.setLong(1,id);
             ps.execute();
@@ -89,7 +85,7 @@ public class PublisherDaoImp implements PublisherDao {
 
     @Override
     public boolean containsId(long id) {
-        try {
+        try(Connection connection = ConnectionDB.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT id FROM publisher WHERE id = ?;", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps.setLong(1,id);
             return ps.executeQuery().next();
