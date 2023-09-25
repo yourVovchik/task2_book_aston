@@ -1,54 +1,23 @@
 package by.book_aston.task2.service;
 
-import by.book_aston.task2.db.BookDao;
 import by.book_aston.task2.mapper.BookMapper;
+import by.book_aston.task2.model.dto.author.AuthorDto;
 import by.book_aston.task2.model.dto.book.BookDto;
 import by.book_aston.task2.model.entity.Author;
 
 import java.util.List;
 
-public class BookService {
+public interface BookService {
 
-    private final BookDao bookDao;
+    BookDto get(long id);
 
-    public BookService(BookDao bookDao) {
-        this.bookDao = bookDao;
-    }
+    long add(BookDto bookDto);
 
-    public BookDto get(long id){
-        if(bookDao.containsId(id)){
-            return BookMapper.toBookDtoFromBook(bookDao.get(id));
-        }
-        throw new NullPointerException(id + " not found");
-    };
+    void delete(long id);
 
-    public long add(BookDto bookDto){
-        return bookDao.add(BookMapper.toBookFromBookDto(bookDto));
-    };
-    public void delete(long id){
-        if(bookDao.containsId(id)){
-            bookDao.delete(id);
-        }else{
-            throw new NullPointerException(id + " not found");
-        }
+    void editName(long id, String name);
 
-    };
-    public void editName(long id, String name){
-        if(bookDao.containsId(id)){
-            bookDao.editName(id,name);
-        }else{
-            throw new NullPointerException(id + " not found");
-        }
+    void editAuthors(long id, List<Author> authors);
 
-    };
-    public void editAuthors(long id, List<Author> authors){
-        if(bookDao.containsId(id)){
-            bookDao.editAuthors(id,authors);
-        }else{
-            throw new NullPointerException(id + " not found");
-        }
-    };
-    public boolean containsId(long id){
-        return bookDao.containsId(id);
-    };
+    boolean containsId(long id);
 }

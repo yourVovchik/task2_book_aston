@@ -1,12 +1,30 @@
 package by.book_aston.task2.model.entity;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "author")
 public class Author {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "surname")
     private String surname;
+
+    @ManyToOne
+    @JoinColumn(name="publisher_id", nullable=false)
     private Publisher publisher;
+
+    @ManyToMany
+    @JoinTable(
+            name = "author_book",
+            joinColumns = { @JoinColumn(name = "author_id") },
+            inverseJoinColumns = { @JoinColumn(name = "book_id") }
+    )
     private List<Book> bookList;
 
     public Author(long id, String name, String surname,Publisher publisher, List<Book> bookList) {
@@ -21,6 +39,9 @@ public class Author {
         this.id = id;
         this.name = name;
         this.surname = surname;
+    }
+
+    public Author() {
     }
 
     public long getId() {

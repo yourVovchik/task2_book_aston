@@ -1,16 +1,28 @@
 package by.book_aston.task2.model.entity;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "publisher")
 public class Publisher {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy="publisher")
     private List<Author> authorList;
 
     public Publisher(long id, String name, List<Author> authorList) {
         this.id = id;
         this.name = name;
         this.authorList = authorList;
+    }
+
+    public Publisher() {
     }
 
     public long getId() {

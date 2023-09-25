@@ -1,12 +1,22 @@
 package by.book_aston.task2.model.entity;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
+@Table(name = "book")
 public class Book {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "publication_date")
     private LocalDate publicationDate;
+
+    @ManyToMany(mappedBy = "bookList")
     private List<Author> authors;
 
     public Book(long id, String name, LocalDate publicationDate, List<Author> authors) {
@@ -20,6 +30,9 @@ public class Book {
         this.id = id;
         this.name = name;
         this.publicationDate = publicationDate;
+    }
+
+    public Book() {
     }
 
     public void setPublicationDate(LocalDate publicationDate) {

@@ -16,9 +16,19 @@ import java.util.*;
 
 public class BookDaoImp implements BookDao {
 
+    private final Connection connection;
+
+    public BookDaoImp(Connection connection) {
+        this.connection = connection;
+    }
+
+    public BookDaoImp() {
+        this.connection = ConnectionDB.getConnection();
+    }
+
     @Override
     public Book get(long id) {
-        try(Connection connection = ConnectionDB.getConnection()) {
+        try{
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT b.id, b.name, b.publication_date, a.id AS author_id, a.name AS author_name, a.surname AS author_surname " +
                             "FROM book b LEFT JOIN author_book atb ON b.id = atb.book_id LEFT JOIN author a ON atb.author_id = a.id WHERE b.id = ?;");
@@ -33,7 +43,7 @@ public class BookDaoImp implements BookDao {
 
     @Override
     public long add(Book book) {
-        try(Connection connection = ConnectionDB.getConnection()) {
+        try{
             PreparedStatement ps = connection.prepareStatement("INSERT INTO book (id,name,publication_date) VALUES (DEFAULT,?,?) RETURNING id;");
             ps.setString(1,book.getName());
             ps.setDate(2,java.sql.Date.valueOf(book.getPublicationDate()));
@@ -54,7 +64,7 @@ public class BookDaoImp implements BookDao {
 
     @Override
     public void delete(long id) {
-        try(Connection connection = ConnectionDB.getConnection()) {
+        try{
             PreparedStatement ps = connection.prepareStatement("DELETE FROM book WHERE id = ?;");
             PreparedStatement ps1 = connection.prepareStatement("DELETE FROM author_book WHERE book_id = ?;");
             ps.setLong(1,id);
@@ -69,7 +79,7 @@ public class BookDaoImp implements BookDao {
 
     @Override
     public void editName(long id, String name) {
-        try(Connection connection = ConnectionDB.getConnection()) {
+        try{
             PreparedStatement ps = connection.prepareStatement("UPDATE book SET name = ? WHERE id = ?;");
             ps.setString(1,name);
             ps.setLong(2,id);
@@ -81,7 +91,7 @@ public class BookDaoImp implements BookDao {
 
     @Override
     public void editPublicationDate(long id, LocalDate localDate) {
-        try(Connection connection = ConnectionDB.getConnection()) {
+        try{
             PreparedStatement ps = connection.prepareStatement("UPDATE book SET publication_date = ? WHERE id = ?;");
             ps.setDate(1, Date.valueOf(localDate));
             ps.setLong(2,id);
@@ -93,7 +103,7 @@ public class BookDaoImp implements BookDao {
 
     @Override
     public void editAuthors(long id, List<Author> authors) {
-        try(Connection connection = ConnectionDB.getConnection()) {
+        try{
             PreparedStatement ps = connection.prepareStatement("DELETE FROM author_book WHERE book_id = ?;");
             ps.setLong(1,id);
             ps.execute();
@@ -110,7 +120,7 @@ public class BookDaoImp implements BookDao {
 
     @Override
     public boolean containsId(long id) {
-        try(Connection connection = ConnectionDB.getConnection()) {
+        try {
             PreparedStatement ps = connection.prepareStatement("SELECT id FROM book WHERE id = ?;", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps.setLong(1,id);
             return ps.executeQuery().next();
