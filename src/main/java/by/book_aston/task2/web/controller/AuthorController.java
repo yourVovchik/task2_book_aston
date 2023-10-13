@@ -1,7 +1,6 @@
 package by.book_aston.task2.web.controller;
 
 import by.book_aston.task2.model.dto.author.AuthorDto;
-import by.book_aston.task2.model.entity.Author;
 import by.book_aston.task2.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/authors")
 public class AuthorController {
 
+
     private final AuthorService authorService;
 
     @Autowired
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
+
 
     @GetMapping("/{id}")
     public String get(@PathVariable long id, Model model) {

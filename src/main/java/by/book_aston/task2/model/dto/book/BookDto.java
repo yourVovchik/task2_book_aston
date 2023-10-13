@@ -17,6 +17,9 @@ public class BookDto {
         this.authorBooksDtoList = authorBooksDtoList;
     }
 
+    public BookDto() {
+    }
+
     public long getId() {
         return id;
     }

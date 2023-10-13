@@ -1,6 +1,10 @@
 package by.book_aston.task2.model.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+
 import java.util.List;
 
 @Entity

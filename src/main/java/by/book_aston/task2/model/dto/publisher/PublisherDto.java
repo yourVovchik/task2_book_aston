@@ -13,6 +13,9 @@ public class PublisherDto {
         this.authorPublishersDtoList = authorPublishersDtoList;
     }
 
+    public PublisherDto() {
+    }
+
     public long getId() {
         return id;
     }

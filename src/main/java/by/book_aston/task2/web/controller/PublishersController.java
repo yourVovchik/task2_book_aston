@@ -24,7 +24,7 @@ public class PublishersController {
 
 
     @GetMapping("/{id}")
-    public String get(@PathVariable int id, Model model) {
+    public String get(@PathVariable long id, Model model) {
         model.addAttribute("publisher",publisherService.get(id));
         return "publisherPage";
     }
